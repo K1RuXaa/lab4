@@ -1,0 +1,127 @@
+@startuml
+scale max 5000 width
+
+class Main {
++static void main(String[] args)
+}
+Main --down[#AAA]-o Objects.Entity
+Main --------------down[#AAA]--o Objects.Entity
+Main -down[#AAA]-o Objects.Entity
+Main -down[#AAA]--o Objects.Entity
+Main -down[#AAA]-o Objects.Entity
+Main --down[#AAA]-o Objects.Entity
+Main -down[#AAA]--o Objects.Entity
+Main -down[#AAA]-o Objects.Entity
+Main -down[#AAA]--o Objects.Entity
+Main -down[#AAA]-o Objects.Entity
+'!>10 Main --down[#AAA]-o Objects.Entity
+'!>10 Main -down[#AAA]--o Objects.Entity
+'!>10 Main -down[#AAA]-o Objects.Thing
+'!>10 Main -down[#AAA]--o Objects.Place
+'!>10 Main -down[#AAA]-o Objects.Place
+'!>10 Main --down[#AAA]-o Objects.Place
+'!>10 Main -down[#AAA]--o Objects.Place
+'!>10 Main -down[#AAA]-o Objects.Place
+'!>10 Main -down[#AAA]--o Objects.Entity
+'!>10 Main -down[#AAA]-o Objects.Entity
+
+class Objects.Entity extends Objects.Obj implements Interfaces.Property, Interfaces.Coordinate,Interfaces.Amplifiable {
++boolean equals(Object o)
++int hashCode()
++String toString()
+-String ending
+final -String name
+final -Gender sex
++Entity(String name, Gender sex)
++void doSomethingSomeWhere(Action act, Place place,Obj e)
++void doSomething(Action act)
++void doSomethingAboutSb(Action act, Obj e)
++void bothActions(Action act, Action act2)
++void getProperty(String property)
++void getCoordinate(CoordinateEnum xyz)
++void getCoordinate(Place place)
++void amplify(Conditions conditions)
+}
+
+
+abstract class Objects.Obj {
+String name
++Obj(String name)
+}
+
+
+class Objects.Place extends Objects.Obj implements Interfaces.Coordinate, Interfaces.Property, Interfaces.Amplifiable {
+final String name
++Place(String name)
++void getCoordinate(CoordinateEnum xyz)
++void getCoordinate(Place place)
++void getProperty(String property)
++void amplify(Conditions conditions)
+}
+
+
+class Objects.PlaceTime {
++static void setTime(Time time)
+}
+
+
+class Objects.Thing extends Objects.Obj implements Interfaces.Property, Interfaces.Amplifiable, Interfaces.Implied {
+final String name
++Thing(String name)
++void getProperty(String property)
++void amplify(Conditions conditions)
++void implie(Place place)
+}
+
+
+interface Interfaces.Amplifiable {
++void amplify(Conditions conditions)
+}
+
+
+interface Interfaces.Coordinate {
++void getCoordinate(CoordinateEnum xyz)
++void getCoordinate(Place place)
+}
+
+
+interface Interfaces.Implied {
++void implie(Place place)
+}
+
+
+interface Interfaces.Property {
++void getProperty(String property)
+}
+
+
+enum Enums.Action {
+NotListen, Watch, noDelete, Spin, Kylbit, Talk, Put,Clogged,LeanedOut,DropOut,Throw,Swim,Hurt,Seem,Stand,Understood,See,Done,Could
+}
+
+
+enum Enums.Conditions {
+Better,Good,Worse,Bad,How,While,Defolt,PowerFull,But,ThatIs,That,Finally
+}
+
+
+enum Enums.CoordinateEnum {
+Close, Far, High, Low, All, NoCoordinate
+}
+
+
+enum Enums.Gender {
+Male(" "), Female("у "), Neuther("о "), All("и ")
+-String name
+Gender(String name)
++String getName()
+}
+
+
+enum Enums.Time {
+Night, TimeByTime, NotForAMoment, Then,Sometimes
+}
+
+
+
+@enduml
