@@ -47,13 +47,22 @@ public class Entity extends Obj implements Property, Coordinate,Amplifiable {
 
     }
     public void doSomethingAbSbSomeWhere(Action act, Place place,Obj e){
-        if (act == Action.Put){
-            System.out.print(this.name + "положил " + ending + e.name  + "у"+ " в " + place.name + "у" );
+        switch (act)
+        {case Put -> System.out.print(this.name + "положил " + ending + e.name  + "у"+ " в " + place.name + "у");
+
         }
 
     }
     public void doSomeThingSomeWhere(Action act, Place place){
-        if (act == Action.Write){
+        switch (act)
+        {
+            case Write -> System.out.print(super.name + " напишет что-нибудь " +place.name);
+            case Put -> System.out.print(super.name + "в " + place.name+"у ");
+            case Throw -> System.out.print("бросит " + place.name);
+            case Wrote -> System.out.print(" и написал " + place.name);
+
+        }
+        /*if (act == Action.Write){
             System.out.print(super.name + " напишет что-нибудь " +place.name);
         } else if (act == Action.Put) {
             System.out.print(super.name + "в " + place.name+"у ");
@@ -63,11 +72,27 @@ public class Entity extends Obj implements Property, Coordinate,Amplifiable {
         } else if (act == Action.Wrote) {
             System.out.print(" и написал " + place.name);
 
-        }
+        }*/
     }
 
     public void doSomething(Action act){
-        if (act == Action.Clogged){
+        switch (act)
+        {
+            case Clogged -> System.out.print(super.name + " закупорил " + ending);
+            case DropOut ->  System.out.print(super.name+"не выпасть"+ending);
+            case Watch ->  System.out.print(this.name + " следил" );
+            case Swim -> System.out.print(super.name + " уплывает");
+            case Hurt -> System.out.print(super.name + " не заболел"+ending);
+            case Stand -> System.out.print(super.name + " стало ");
+            case Seem -> System.out.print("казаться ");
+            case Understood -> System.out.print(super.name + " понял");
+            case Thinks -> System.out.print(super.name + " подумал ");
+            case Stay -> System.out.print("оставалось сухого");
+            case Started -> System.out.print(super.name + " начался,");
+            case Sleep -> System.out.print(super.name + " спал.");
+            case Tired -> System.out.println(super.name + " устал ");
+        }
+        /*if (act == Action.Clogged){
             System.out.print(super.name + " закупорил " + ending);
 
         }else if (act == Action.DropOut){
@@ -95,27 +120,23 @@ public class Entity extends Obj implements Property, Coordinate,Amplifiable {
         } else if (act == Action.Tired) {
             System.out.println(super.name + " устал ");
 
-        }
+        }*/
     }
 
     public void doSomethingAboutSb(Action act, Obj e){
-        if (act == Action.Put){
-            super.name = " положит " + e.name+ ending;
-        }else if (act == Action.Watch){
-            System.out.print(super.name + " смотрел"+ ending + e.name);
-        }else if(act == Action.Clogged) {
-            System.out.print(super.name + " закупорил " + ending + e.name + "у");
-        }else if (act == Action.LeanedOut){
-            System.out.print(super.name + " высунулся" + ending + " из " + e.name + "а");
-        }else if (act==Action.Throw){
-            System.out.print(super.name + "бросил" + ending + e.name + "у");
-        }else if (act == Action.See) {
-            System.out.print(super.name +" " + e.name + " никогда не увидит");
-        }else if (act==Action.Search) {
-            System.out.print(this.name + " обыскал " + e.name);
-        }else if (act == Action.Found) {
-            System.out.print(super.name + " нашел " + e.name);
+        switch (act)
+        {
+            case Put -> super.name = " положит " + e.name+ ending;
+            case Watch -> System.out.print(super.name + " смотрел"+ ending + e.name);
+            case Clogged -> System.out.print(super.name + " закупорил " + ending + e.name + "у");
+            case LeanedOut -> System.out.print(super.name + " высунулся" + ending + " из " + e.name + "а");
+            case Throw ->  System.out.print(super.name + "бросил" + ending + e.name + "у");
+            case See -> System.out.print(super.name +" " + e.name + " никогда не увидит");
+            case Search -> System.out.print(this.name + " обыскал " + e.name);
+            case Found -> System.out.print(super.name + " нашел " + e.name);
+
         }
+
 
 
     }
@@ -144,11 +165,16 @@ public class Entity extends Obj implements Property, Coordinate,Amplifiable {
 
     @Override
     public void getCoordinate(CoordinateEnum xyz){
-        if (xyz == CoordinateEnum.NoCoordinate){
+        switch (xyz)
+        {
+            case NoCoordinate -> super.name = super.name;
+            case Far -> super.name = super.name + " дальше ";
+        }
+        /*if (xyz == CoordinateEnum.NoCoordinate){
             super.name = super.name;
         }else if (xyz == CoordinateEnum.Far){
             super.name = super.name + " дальше ";
-        }
+        }*/
     }
     @Override
     public void getCoordinate(Place place){
@@ -157,7 +183,23 @@ public class Entity extends Obj implements Property, Coordinate,Amplifiable {
     }
     @Override
     public void amplify(Conditions conditions) {
-        if (conditions == Conditions.Defolt) {
+        switch (conditions)
+        {
+            case Defolt -> super.name = "как можно";
+            case Better -> super.name = " как можно лучше";
+            case But -> super.name = " но так,чтобы ";
+            case PowerFull -> super.name = " изо всех сил ";
+            case How -> super.name = "как";
+            case While -> System.out.print(" пока " + super.name);
+            case ThatIs ->  super.name = "что это" + super.name;
+            case That -> super.name = "что ";
+            case Finally ->  super.name = " наконец " + this.name;
+            case ThatIf -> super.name = " что если " + this.name;
+            case Maybe -> super.name = "может быть, " + super.name;
+            case Very -> super.name = this.name + " очень ";
+
+        }
+        /*if (conditions == Conditions.Defolt) {
             super.name = "как можно";
         } else if (conditions == Conditions.Better) {
             super.name = " как можно лучше";
@@ -184,7 +226,7 @@ public class Entity extends Obj implements Property, Coordinate,Amplifiable {
         } else if (conditions == Conditions.Very) {
             super.name = this.name + " очень ";
 
-        }
+        }*/
 
     }
 

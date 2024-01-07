@@ -1,17 +1,71 @@
 import Enums.*;
+import Exceptions.InputException;
 import Objects.Entity;
 import Objects.Place;
 import Objects.PlaceTime;
 import Objects.Thing;
+import Interfaces.AssotiativeMassive;
+import java.util.Scanner;
+import java.util.HashMap;
+import Interfaces.Inputable;
 
-import java.security.KeyStore;
+import java.util.Map;
 import java.util.Random;
 
 
 public class Main {
 
+
+
     public static void main(String[] args){
+        Entity tr = new Entity("123",Gender.Male);
+        class MyObjects{
+            Map<String,Entity> entityes = new HashMap<>();
+            Map<String,Place> places = new HashMap<>();
+            Map<String,Thing> things = new HashMap<>();
+            public MyObjects(){
+                entityes.put("he",new Entity("он ", Gender.Male));
+                entityes.put("paper",new Entity("бумаг",Gender.Female));
+                entityes.put("piggy",new Entity("Пятачок", Gender.Male));
+                entityes.put("she",new Entity("она",Gender.Female));
+                entityes.put("eyes",new Entity("глаза ",Gender.All));
+                entityes.put("him",new Entity("у него ",Gender.Male));
+                entityes.put("remakehim",new Entity("ему",Gender.Male));
+                entityes.put("her",new Entity("её",Gender.Female));
+                entityes.put("somebody",new Entity("кто-нибудь",Gender.Male));
+                entityes.put("rain",new Entity("дождь",Gender.Male));
+                entityes.put("winnyPux",new Entity("Винни-Пух",Gender.Male));
+                things.put("desert",new Thing("сухую"));
+                things.put("ripples",new Thing("рябь"));
+                things.put("house",new Thing("весь дом"));
+                things.put("all",new Thing("всё"));
+                things.put("pen",new Thing("карандаш"));
+                things.put("piece",new Thing("сухой кусочек"));
+                places.put("bottle",new Place("бутылк"));
+                places.put("window",new Place("окошк"));
+                places.put("onWater",new Place("на воде"));
+                places.put("onPaper",new Place("на бумажке"));
+                places.put("inWater",new Place("в воду"));
+                places.put("oneWayOfPaper",new Place("на обратной стороне бумажки"));
+
+
+            }
+            public Entity getEntity(String name){
+                return entityes.get(name);
+            }
+            public Place getPlace(String name){
+                return places.get(name);
+            }
+            public Thing getThing(String name){
+                return things.get(name);
+            }
+
+        }
         //объекты, которые могут действовать
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("В истории про Винни-Пуха Пятачок ищет сухие предметы, введите локацию где будет искать Пятачок (снаружи/внутри) ");
+        String inputstring = scanner.nextLine();
+        scanner.close();
         Entity he = new Entity("он ", Gender.Male);
         Entity paper = new Entity("бумаг",Gender.Female);
         Entity piggy = new Entity("Пятачок", Gender.Male);
@@ -26,37 +80,35 @@ public class Main {
 
 
 
-
-
-
         //объекты не умеющие действовать
         Thing desert = new Thing("сухую");
         Thing ripples = new Thing("рябь");
-        Thing house = new Thing("весь дом");
+        Thing house = new Thing("весь дом ");
         Thing all = new Thing("всё");
         Thing pen = new Thing("карандаш");
         Thing piece = new Thing("сухой кусочек");
-
-
-
         //объекты места
-
-
         Place bottle = new Place("бутылк");
         Place window = new Place("окошк");
         Place onWater = new Place("на воде");
         Place onPaper = new Place("на бумажке");
         Place inWater = new Place("в воду");
         Place oneWayOfPaper = new Place("на обратной стороне бумажки");
+
+        try {
+            processInput(inputstring);
+        } catch (InputException e) {
+            System.out.println("поймал ошибку");;
+        }
         //Создаем локальный класс
         class Story{
-            public boolean Flag= false;
+            public boolean Flag= true;
 
             Thing houseState = new Thing(""){ // анонимный класс
-
+                @Override
                 public void getStatement(CoordinateEnum coordinate) {
                     //if (Math.random() <=1 && coordinate == CoordinateEnum.OutSide) {//КИНУТЬ ФРОВ ОБ ОКОНЧАНИИ ПРОГИ
-                    if (0.25 <= 1){
+                    if (0.25 < 1){
                         System.out.print("снаружи ");
                         Flag = false;
                     }else {
@@ -66,8 +118,9 @@ public class Main {
                 }
             };
            public void makeStory(){
-
+               houseState.getStatement(CoordinateEnum.OutSide);
                if (Flag == true){
+
                    System.out.println("Здравствуйте читатель, вам попалась история про Пятачка №1");
                    // докинуть throws ( ошибку )
                    System.out.println("=================================================================================\n");
@@ -89,7 +142,7 @@ public class Main {
                    Thing.EndSentence.endMessage(",вернее ");// использование вложенного статик класса
                    all.amplify(Conditions.That);
                    houseState.getStatement(CoordinateEnum.OutSide);
-                   System.out.print("промокло");
+                   System.out.println("промокло");
                }else {
                    System.out.println("#123");
                    // докинуть throws ( ошибку )
@@ -109,7 +162,7 @@ public class Main {
                    System.out.println("-");
                    //2 предложение
                    he.doSomethingAboutSb(Action.Search, house);
-                   Thing.EndSentence.endMessage(",вернее ");// использование вложенного статик класса
+                   //Thing.EndSentence.endMessage(",вернее ");// использование вложенного статик класса
                    all.amplify(Conditions.That);
                    houseState.getStatement(CoordinateEnum.OutSide);
                    he.doSomething(Action.Stay);
@@ -177,7 +230,7 @@ public class Main {
                    rain.doSomething(Action.Started);
                    winnyPux.doSomething(Action.Sleep);
                    rain.bothActions(Action.Goes, Action.Goes);
-                   System.out.print(",a");
+                   System.out.print(",a ");
                    he.bothActions(Action.Sleep, Action.Sleep);
                    System.out.print(".");
                    //6 предложение
@@ -305,12 +358,33 @@ public class Main {
 
 
 
+
+
         //проверка на одного и того же человека с помощью пола + имя(не важен регистр)
         Entity e1 = new Entity("name1", Gender.Male);
         Entity e2 = new Entity("Name1", Gender.Male);
 
         System.out.println(e1.equals(e2));
         System.out.println(e1);
+
+    }
+
+
+    public static void processInput(String inputstring) throws InputException {
+
+
+
+        if (inputstring.equals("снаружи")){
+            System.out.println("1 история");
+
+        }else if (inputstring.equals("внутри")){
+            System.out.println("2 история");
+
+        }else {
+            throw new InputException("");
+        }
+
+
     }
 
 }

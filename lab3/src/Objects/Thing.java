@@ -1,4 +1,5 @@
 package Objects;
+import Exceptions.InputException;
 import Exceptions.WeatherException;
 
 import Enums.Conditions;
@@ -35,7 +36,7 @@ public class Thing extends Obj implements Property, Amplifiable, Implied {
         if (conditions == Conditions.ThatIs){
             System.out.print(" что это просто " + super.name  );
         } else if (conditions==Conditions.That) {
-            System.out.print(this.name + " что ");
+            System.out.print(this.name + " что было ");
 
         }
     }
@@ -48,9 +49,12 @@ public class Thing extends Obj implements Property, Amplifiable, Implied {
 
     }
     public void getStatement(CoordinateEnum coordinate){
-        if (coordinate == CoordinateEnum.OutSide){
+        //if (coordinate == CoordinateEnum.OutSide){
             System.out.print("из thing");
-        }
+        //}
+
+    }
+    public void processInput(String inputstring) throws InputException {
 
     }
 }
